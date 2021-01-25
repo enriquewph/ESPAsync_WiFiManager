@@ -1338,7 +1338,7 @@ void ESPAsync_WiFiManager::handleRoot(AsyncWebServerRequest *request)
 
   if (captivePortal(request))
   {
-    // If caprive portal redirect instead of displaying the error page.
+    // If captive portal redirect instead of displaying the error page.
     return;
   }
 
@@ -1969,7 +1969,7 @@ void ESPAsync_WiFiManager::handleNotFound(AsyncWebServerRequest *request)
 {
   if (captivePortal(request))
   {
-    // If caprive portal redirect instead of displaying the error page.
+    // If captive portal redirect instead of displaying the error page.
     return;
   }
 

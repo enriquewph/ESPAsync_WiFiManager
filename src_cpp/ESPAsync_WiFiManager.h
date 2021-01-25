@@ -35,6 +35,7 @@
 #define ESP_ASYNC_WIFIMANAGER_VERSION     "ESPAsync_WiFiManager v1.4.3"
 
 #include "ESPAsync_WiFiManager_Debug.h"
+#include "ESPAsync_Page_Files.h"
 
 //KH, for ESP32
 #ifdef ESP8266
@@ -120,9 +121,9 @@ typedef struct
 //KH
 // Mofidy HTTP_HEAD to WM_HTTP_HEAD_START to avoid conflict in Arduino esp8266 core 2.6.0+
 const char WM_HTTP_200[] PROGMEM            = "HTTP/1.1 200 OK\r\nContent-Type: text/html\r\n\r\n";
-const char WM_HTTP_HEAD_START[] PROGMEM     = "<!DOCTYPE html><html lang=\"en\"><head><meta name=\"viewport\" content=\"width=device-width, initial-scale=1, user-scalable=no\"/><title>{v}</title>";
+const char WM_HTTP_HEAD_START[] PROGMEM     = PAGE_WM_HTTP_HEAD_START;
 
-const char WM_HTTP_STYLE[] PROGMEM = "<style>div{padding:2px;font-size:1em;}body,textarea,input,select{background: 0;border-radius: 0;font: 16px sans-serif;margin: 0}textarea,input,select{outline: 0;font-size: 14px;border: 1px solid #ccc;padding: 8px;width: 90%}.btn a{text-decoration: none}.container{margin: auto;width: 90%}@media(min-width:1200px){.container{margin: auto;width: 30%}}@media(min-width:768px) and (max-width:1200px){.container{margin: auto;width: 50%}}.btn,h2{font-size: 2em}h1{font-size: 3em}.btn{background: #0ae;border-radius: 4px;border: 0;color: #fff;cursor: pointer;display: inline-block;margin: 2px 0;padding: 10px 14px 11px;width: 100%}.btn:hover{background: #09d}.btn:active,.btn:focus{background: #08b}label>*{display: inline}form>*{display: block;margin-bottom: 10px}textarea:focus,input:focus,select:focus{border-color: #5ab}.msg{background: #def;border-left: 5px solid #59d;padding: 1.5em}.q{float: right;width: 64px;text-align: right}.l{background: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAMAAABEpIrGAAAALVBMVEX///8EBwfBwsLw8PAzNjaCg4NTVVUjJiZDRUUUFxdiZGSho6OSk5Pg4eFydHTCjaf3AAAAZElEQVQ4je2NSw7AIAhEBamKn97/uMXEGBvozkWb9C2Zx4xzWykBhFAeYp9gkLyZE0zIMno9n4g19hmdY39scwqVkOXaxph0ZCXQcqxSpgQpONa59wkRDOL93eAXvimwlbPbwwVAegLS1HGfZAAAAABJRU5ErkJggg==') no-repeat left center;background-size: 1em}input[type='checkbox']{float: left;width: 20px}.table td{padding:.5em;text-align:left}.table tbody>:nth-child(2n-1){background:#ddd}fieldset{border-radius:0.5rem;margin:0px;}</style>";
+const char WM_HTTP_STYLE[] PROGMEM = PAGE_WM_HTTP_STYLE;
 
 // KH, update from v1.1.0
 const char WM_HTTP_SCRIPT[] PROGMEM = "<script>function c(l){document.getElementById('s').value=l.innerText||l.textContent;document.getElementById('p').focus();document.getElementById('s1').value=l.innerText||l.textContent;document.getElementById('p1').focus();}</script>";
@@ -136,7 +137,7 @@ const char WM_HTTP_SCRIPT[] PROGMEM = "<script>function c(l){document.getElement
 
 #if USE_ESP_WIFIMANAGER_NTP
 
-const char WM_HTTP_SCRIPT_NTP_MSG[] PROGMEM = "<p>Your timezone is : <b><label id='timezone'></b><script>document.getElementById('timezone').innerHTML = timezone.name();</script></p>";
+const char WM_HTTP_SCRIPT_NTP_MSG[] PROGMEM = PAGE_WM_HTTP_SCRIPT_NTP_MSG;
 
 // To permit disable or configure NTP from sketch
 #ifndef USE_CLOUDFLARE_NTP
@@ -154,17 +155,17 @@ const char WM_HTTP_SCRIPT_NTP[] PROGMEM = "<script>(function(e){var t=function()
   const char WM_HTTP_SCRIPT_NTP[] PROGMEM       = "";
 #endif
 
-const char WM_HTTP_HEAD_END[] PROGMEM = "</head><body><div class=\"container\"><div style=\"text-align:left;display:inline-block;min-width:260px;\">";
+const char WM_HTTP_HEAD_END[] PROGMEM = PAGE_WM_HTTP_HEAD_END;
 
 const char WM_FLDSET_START[]  PROGMEM = "<fieldset>";
 const char WM_FLDSET_END[]    PROGMEM = "</fieldset>";
 
-const char WM_HTTP_PORTAL_OPTIONS[] PROGMEM = "<form action=\"/wifi\" method=\"get\"><button class=\"btn\">Configuration</button></form><br/><form action=\"/i\" method=\"get\"><button class=\"btn\">Information</button></form><br/><form action=\"/close\" method=\"get\"><button class=\"btn\">Exit Portal</button></form><br/>";
+const char WM_HTTP_PORTAL_OPTIONS[] PROGMEM = PAGE_WM_HTTP_PORTAL_OPTIONS;
 const char WM_HTTP_ITEM[] PROGMEM = "<div><a href=\"#p\" onclick=\"c(this)\">{v}</a>&nbsp;<span class=\"q {i}\">{r}%</span></div>";
 const char JSON_ITEM[] PROGMEM = "{\"SSID\":\"{v}\", \"Encryption\":{i}, \"Quality\":\"{r}\"}";
 
 // KH, update from v1.1.0
-const char WM_HTTP_FORM_START[] PROGMEM = "<form method=\"get\" action=\"wifisave\"><fieldset><div><label>SSID</label><input id=\"s\" name=\"s\" length=32 placeholder=\"SSID\"><div></div></div><div><label>Password</label><input id=\"p\" name=\"p\" length=64 placeholder=\"password\"><div></div></div><div><label>SSID1</label><input id=\"s1\" name=\"s1\" length=32 placeholder=\"SSID1\"><div></div></div><div><label>Password</label><input id=\"p1\" name=\"p1\" length=64 placeholder=\"password1\"><div></div></div></fieldset>";
+const char WM_HTTP_FORM_START[] PROGMEM = PAGE_WM_HTTP_FORM_START;
 //////
 
 const char WM_HTTP_FORM_LABEL_BEFORE[]  PROGMEM   = "<div><label for=\"{i}\">{p}</label><input id=\"{i}\" name=\"{n}\" length={l} placeholder=\"{p}\" value=\"{v}\" {c}><div></div></div>";
@@ -173,10 +174,10 @@ const char WM_HTTP_FORM_LABEL_AFTER[]   PROGMEM   = "<div><input id=\"{i}\" name
 const char WM_HTTP_FORM_LABEL[] PROGMEM = "<label for=\"{i}\">{p}</label>";
 const char WM_HTTP_FORM_PARAM[] PROGMEM = "<input id=\"{i}\" name=\"{n}\" length={l} placeholder=\"{p}\" value=\"{v}\" {c}>";
 
-const char WM_HTTP_FORM_END[] PROGMEM = "<button class=\"btn\" type=\"submit\">Save</button></form>";
+const char WM_HTTP_FORM_END[] PROGMEM = PAGE_WM_HTTP_FORM_END;
 
 // KH, update from v1.1.0
-const char WM_HTTP_SAVED[] PROGMEM = "<div class=\"msg\"><b>Credentials Saved</b><br>Try connecting ESP to the {x}/{x1} network. Wait around 10 seconds then check <a href=\"/\">if it's OK.</a> <p/>The {v} AP will run on the same WiFi channel of the {x}/{x1} AP. You may have to manually reconnect to the {v} AP.</div>";
+const char WM_HTTP_SAVED[] PROGMEM = PAGE_WM_HTTP_SAVED;
 //////
 
 const char WM_HTTP_END[] PROGMEM = "</div></body></html>";
@@ -195,7 +196,7 @@ const char WM_HTTP_CORS[]            PROGMEM = "Access-Control-Allow-Origin";
 const char WM_HTTP_CORS_ALLOW_ALL[]  PROGMEM = "*";
 
 #if USE_AVAILABLE_PAGES
-const char WM_HTTP_AVAILABLE_PAGES[] PROGMEM = "<h3>Available Pages</h3><table class=\"table\"><thead><tr><th>Page</th><th>Function</th></tr></thead><tbody><tr><td><a href=\"/\">/</a></td><td>Menu page.</td></tr><tr><td><a href=\"/wifi\">/wifi</a></td><td>Show WiFi scan results and enter WiFi configuration.</td></tr><tr><td><a href=\"/wifisave\">/wifisave</a></td><td>Save WiFi configuration information and configure device. Needs variables supplied.</td></tr><tr><td><a href=\"/close\">/close</a></td><td>Close the configuration server and configuration WiFi network.</td></tr><tr><td><a href=\"/i\">/i</a></td><td>This page.</td></tr><tr><td><a href=\"/r\">/r</a></td><td>Delete WiFi configuration and reboot. ESP device will not reconnect to a network until new WiFi configuration data is entered.</td></tr><tr><td><a href=\"/state\">/state</a></td><td>Current device state in JSON format. Interface for programmatic WiFi configuration.</td></tr></table>";
+const char WM_HTTP_AVAILABLE_PAGES[] PROGMEM = PAGE_WM_HTTP_AVAILABLE_PAGES;
 #else
   const char WM_HTTP_AVAILABLE_PAGES[] PROGMEM = "";
 #endif
@@ -312,13 +313,13 @@ class ESPAsync_WiFiManager
     String        infoAsString();
 
     // Can use with STA staticIP now
-    boolean       autoConnect();
-    boolean       autoConnect(char const *apName, char const *apPassword = NULL);
+    bool          autoConnect();
+    bool          autoConnect(char const *apName, char const *apPassword = NULL);
     //////
 
     // If you want to start the config portal
-    boolean       startConfigPortal();
-    boolean       startConfigPortal(char const *apName, char const *apPassword = NULL);
+    bool          startConfigPortal();
+    bool          startConfigPortal(char const *apName, char const *apPassword = NULL);
     void startConfigPortalModeless(char const *apName, char const *apPassword);
 
 
@@ -339,7 +340,7 @@ class ESPAsync_WiFiManager
     void          setConnectTimeout(unsigned long seconds);
 
 
-    void          setDebugOutput(boolean debug);
+    void          setDebugOutput(bool debug);
     //defaults to not showing anything under 8% signal quality if called
     void          setMinimumSignalQuality(int quality = 8);
     
@@ -371,7 +372,7 @@ class ESPAsync_WiFiManager
     //called when AP mode and config portal is started
     void          setAPCallback(void(*func)(ESPAsync_WiFiManager*));
     //called when settings have been changed and connection was successful
-    void          setSaveConfigCallback(void(*func)(void));
+    void          setSaveConfigCallback(void(*func)());
 
 #if USE_DYNAMIC_PARAMS
     //adds a custom parameter
@@ -382,7 +383,7 @@ class ESPAsync_WiFiManager
 #endif
 
     //if this is set, it will exit after config, even if connection is unsucessful.
-    void          setBreakAfterConfig(boolean shouldBreak);
+    void          setBreakAfterConfig(bool shouldBreak);
     
     //if this is set, try WPS setup when starting (this will delay config portal for up to 2 mins)
     //TODO
@@ -390,33 +391,33 @@ class ESPAsync_WiFiManager
     void          setCustomHeadElement(const char* element);
     
     //if this is true, remove duplicated Access Points - defaut true
-    void          setRemoveDuplicateAPs(boolean removeDuplicates);
+    void          setRemoveDuplicateAPs(bool removeDuplicates);
     
     //Scan for WiFiNetworks in range and sort by signal strength
     //space for indices array allocated on the heap and should be freed when no longer required
     int           scanWifiNetworks(int **indicesptr);
 
     // return SSID of router in STA mode got from config portal. NULL if no user's input //KH
-    String				getSSID(void) 
+    String				getSSID() 
     {
       return _ssid;
     }
 
     // return password of router in STA mode got from config portal. NULL if no user's input //KH
-    String				getPW(void) 
+    String				getPW() 
     {
       return _pass;
     }
     
     // New from v1.1.0
     // return SSID of router in STA mode got from config portal. NULL if no user's input //KH
-    String				getSSID1(void) 
+    String				getSSID1() 
     {
       return _ssid1;
     }
 
     // return password of router in STA mode got from config portal. NULL if no user's input //KH
-    String				getPW1(void) 
+    String				getPW1() 
     {
       return _pass1;
     }
@@ -453,7 +454,7 @@ class ESPAsync_WiFiManager
       LOGWARN1(F("Set CORS Header to : "), _CORS_Header);
     }
     
-    const char* getCORSHeader(void)
+    const char* getCORSHeader()
     {
       return _CORS_Header;
     }
@@ -472,7 +473,7 @@ class ESPAsync_WiFiManager
     String getStoredWiFiPass();
 #endif
 
-    String WiFi_SSID(void)
+    String WiFi_SSID()
     {
 #ifdef ESP8266
       return WiFi.SSID();
@@ -481,7 +482,7 @@ class ESPAsync_WiFiManager
 #endif
     }
 
-    String WiFi_Pass(void)
+    String WiFi_Pass()
     {
 #ifdef ESP8266
       return WiFi.psk();
@@ -490,7 +491,7 @@ class ESPAsync_WiFiManager
 #endif
     }
 
-    void setHostname(void)
+    void setHostname()
     {
       if (RFC952_hostname[0] != 0)
       {
@@ -510,10 +511,10 @@ class ESPAsync_WiFiManager
 
     AsyncWebServer *server;
 
-    boolean         _modeless;
+    bool            _modeless;
     int             scannow;
     int             shouldscan;
-    boolean         needInfo = true;
+    bool            needInfo = true;
     String          pager;
     wl_status_t     wifiStatus;
 
@@ -549,7 +550,7 @@ class ESPAsync_WiFiManager
     
     WiFiResult          *wifiSSIDs;
     wifi_ssid_count_t   wifiSSIDCount;
-    boolean             wifiSSIDscan;
+    bool                wifiSSIDscan;
     
     // To enable dynamic/random channel
     // default to channel 1
@@ -566,9 +567,9 @@ class ESPAsync_WiFiManager
 
     int           _paramsCount              = 0;
     int           _minimumQuality           = -1;
-    boolean       _removeDuplicateAPs       = true;
-    boolean       _shouldBreakAfterConfig   = false;
-    boolean       _tryWPS                   = false;
+    bool          _removeDuplicateAPs       = true;
+    bool          _shouldBreakAfterConfig   = false;
+    bool          _tryWPS                   = false;
 
     const char*   _customHeadElement        = "";
 
@@ -580,10 +581,10 @@ class ESPAsync_WiFiManager
 #endif   
     //////
 
-    void          setWifiStaticIP(void);
+    void          setWifiStaticIP();
     
     // New v1.1.0
-    int           reconnectWifi(void);
+    int           reconnectWifi();
     //////
     
     int           connectWifi(String ssid = "", String pass = "");
@@ -601,7 +602,7 @@ class ESPAsync_WiFiManager
     void          handleState(AsyncWebServerRequest *request);
     void          handleReset(AsyncWebServerRequest *request);
     void          handleNotFound(AsyncWebServerRequest *request);
-    boolean       captivePortal(AsyncWebServerRequest *request);   
+    bool          captivePortal(AsyncWebServerRequest *request);   
     
     void          reportStatus(String &page);
 
@@ -610,16 +611,16 @@ class ESPAsync_WiFiManager
 
     //helpers
     int           getRSSIasQuality(int RSSI);
-    boolean       isIp(String str);
+    bool          isIp(String str);
     String        toStringIp(IPAddress ip);
 
-    boolean       connect;
-    boolean       stopConfigPortal = false;
+    bool          connect;
+    bool          stopConfigPortal = false;
     
-    boolean       _debug = false;     //true;
+    bool          _debug = false;     //true;
     
     void(*_apcallback)(ESPAsync_WiFiManager*) = NULL;
-    void(*_savecallback)(void)                = NULL;
+    void(*_savecallback)()                = NULL;
 
 #if USE_DYNAMIC_PARAMS
     int                     _max_params;
@@ -644,4 +645,6 @@ class ESPAsync_WiFiManager
     }
 };
 
+
+#include "ESPAsync_WiFiManager-Impl.h"
 
