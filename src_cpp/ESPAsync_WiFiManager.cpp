@@ -1304,12 +1304,12 @@ void ESPAsync_WiFiManager::reportStatus(String &page)
 
   if (WiFi_SSID() != "")
   {
-    page += F("Configured to connect to AP <b>");
+    page += F(LANG_REPORTSTATUS_1);
     page += WiFi_SSID();
 
     if (WiFi.status() == WL_CONNECTED)
     {
-      page += F(" and connected</b> on IP <a href=\"http://");
+      page += F(LANG_REPORTSTATUS_2);
       page += WiFi.localIP().toString();
       page += F("/\">");
       page += WiFi.localIP().toString();
@@ -1317,12 +1317,12 @@ void ESPAsync_WiFiManager::reportStatus(String &page)
     }
     else
     {
-      page += F(" but not connected.</b>");
+      page += F(LANG_REPORTSTATUS_3);
     }
   }
   else
   {
-    page += F("No network configured.");
+    page += F(LANG_REPORTSTATUS_4);
   }
 }
 
@@ -1343,7 +1343,7 @@ void ESPAsync_WiFiManager::handleRoot(AsyncWebServerRequest *request)
   }
 
   String page = FPSTR(WM_HTTP_HEAD_START);
-  page.replace("{v}", "Options");
+  page.replace("{v}", LANG_HANDLEROOT_OPTIONS);
   page += FPSTR(WM_HTTP_SCRIPT);
   page += FPSTR(WM_HTTP_SCRIPT_NTP);
   page += FPSTR(WM_HTTP_STYLE);
@@ -1356,12 +1356,12 @@ void ESPAsync_WiFiManager::handleRoot(AsyncWebServerRequest *request)
   {
     if (WiFi.status() == WL_CONNECTED)
     {
-      page += " on ";
+      page += " " LANG_HANDLEROOT_ON " ";
       page += WiFi_SSID();
     }
     else
     {
-      page += " <s>on ";
+      page += " <s>" LANG_HANDLEROOT_ON " ";
       page += WiFi_SSID();
       page += "</s>";
     }
@@ -1405,13 +1405,13 @@ void ESPAsync_WiFiManager::handleWifi(AsyncWebServerRequest *request)
   _configPortalTimeout = 0;
    
   String page = FPSTR(WM_HTTP_HEAD_START);
-  page.replace("{v}", "Config ESP");
+  page.replace("{v}", LANG_CONFIG_TITLE);
   page += FPSTR(WM_HTTP_SCRIPT);
   page += FPSTR(WM_HTTP_SCRIPT_NTP);
   page += FPSTR(WM_HTTP_STYLE);
   page += _customHeadElement;
   page += FPSTR(WM_HTTP_HEAD_END);
-  page += F("<h2>Configuration</h2>");
+  page += F(LANG_CONFIG_CONFIG);
 
   wifiSSIDscan = false;
   LOGDEBUG(F("handleWifi: Scan done"));
@@ -1419,7 +1419,7 @@ void ESPAsync_WiFiManager::handleWifi(AsyncWebServerRequest *request)
   if (wifiSSIDCount == 0) 
   {
     LOGDEBUG(F("handleWifi: No networks found"));
-    page += F("No networks found. Refresh to scan again.");
+    page += F(LANG_CONFIG_NONETWORK);
   } 
   else 
   {
@@ -1437,7 +1437,7 @@ void ESPAsync_WiFiManager::handleWifi(AsyncWebServerRequest *request)
   
   wifiSSIDscan = true;
   
-  page += "<small>To reuse already connected AP, leave SSID & password fields empty</small>";
+  page += LANG_CONFIG_REUSE;
   
   page += FPSTR(WM_HTTP_FORM_START);
   char parLength[2];
@@ -1668,7 +1668,7 @@ void ESPAsync_WiFiManager::handleWifiSave(AsyncWebServerRequest *request)
 #endif
 
   String page = FPSTR(WM_HTTP_HEAD_START);
-  page.replace("{v}", "Credentials Saved");
+  page.replace("{v}", LANG_WIFISAVE_CREDSAVED);
   page += FPSTR(WM_HTTP_SCRIPT);
   page += FPSTR(WM_HTTP_SCRIPT_NTP);
   page += FPSTR(WM_HTTP_STYLE);
@@ -1712,20 +1712,20 @@ void ESPAsync_WiFiManager::handleServerClose(AsyncWebServerRequest *request)
   LOGDEBUG(F("Server Close"));
    
   String page = FPSTR(WM_HTTP_HEAD_START);
-  page.replace("{v}", "Close Server");
+  page.replace("{v}", LANG_CLOSEPORTAL_1);
   page += FPSTR(WM_HTTP_SCRIPT);
   page += FPSTR(WM_HTTP_SCRIPT_NTP);
   page += FPSTR(WM_HTTP_STYLE);
   page += _customHeadElement;
   page += FPSTR(WM_HTTP_HEAD_END);
   page += F("<div class=\"msg\">");
-  page += F("My network is <b>");
+  page += F(LANG_CLOSEPORTAL_2);
   page += WiFi_SSID();
   page += F("</b><br>");
-  page += F("IP address is <b>");
+  page += F(LANG_CLOSEPORTAL_3);
   page += WiFi.localIP().toString();
   page += F("</b><br><br>");
-  page += F("Portal closed...<br><br>");
+  page += F(LANG_CLOSEPORTAL_4);
   
   //page += F("Push button on device to restart configuration server!");
   
@@ -1763,7 +1763,7 @@ void ESPAsync_WiFiManager::handleInfo(AsyncWebServerRequest *request)
   _configPortalTimeout = 0;
  
   String page = FPSTR(WM_HTTP_HEAD_START);
-  page.replace("{v}", "Info");
+  page.replace("{v}", LANG_INFO_1);
   page += FPSTR(WM_HTTP_SCRIPT);
   page += FPSTR(WM_HTTP_SCRIPT_NTP);
   page += FPSTR(WM_HTTP_STYLE);
@@ -1778,22 +1778,22 @@ void ESPAsync_WiFiManager::handleInfo(AsyncWebServerRequest *request)
   
   if (connect)
   {
-    page += F("<dt>Trying to connect</dt><dd>");
+    page += F("<dt>" LANG_INFO_2 "</dt><dd>");
     page += wifiStatus;
     page += F("</dd>");
   }
 
   page +=pager;
   
-  page += F("<h2>WiFi Information</h2>");
+  page += F(LANG_INFO_3);
   reportStatus(page);
   
   page += FPSTR(WM_FLDSET_START);
   
-  page += F("<h3>Device Data</h3>");
+  page += F(LANG_INFO_4);
   
   page += F("<table class=\"table\">");
-  page += F("<thead><tr><th>Name</th><th>Value</th></tr></thead><tbody><tr><td>Chip ID</td><td>");
+  page += F(LANG_INFO_5);
 
 #ifdef ESP8266
   page += String(ESP.getChipId(), HEX);		//ESP.getChipId();
@@ -1802,7 +1802,7 @@ void ESPAsync_WiFiManager::handleInfo(AsyncWebServerRequest *request)
 #endif
 
   page += F("</td></tr>");
-  page += F("<tr><td>Flash Chip ID</td><td>");
+  page += F(LANG_INFO_6);
 
 #ifdef ESP8266
   page += String(ESP.getFlashChipId(), HEX);		//ESP.getFlashChipId();
@@ -1812,10 +1812,10 @@ void ESPAsync_WiFiManager::handleInfo(AsyncWebServerRequest *request)
 #endif
 
   page += F("</td></tr>");
-  page += F("<tr><td>IDE Flash Size</td><td>");
+  page += F(LANG_INFO_7);
   page += ESP.getFlashChipSize();
   page += F(" bytes</td></tr>");
-  page += F("<tr><td>Real Flash Size</td><td>");
+  page += F(LANG_INFO_8);
 
 #ifdef ESP8266
   page += ESP.getFlashChipRealSize();
@@ -1824,23 +1824,23 @@ void ESPAsync_WiFiManager::handleInfo(AsyncWebServerRequest *request)
   page += F("TODO");
 #endif
 
-  page += F(" bytes</td></tr>");
-  page += F("<tr><td>Access Point IP</td><td>");
+  page += F(LANG_INFO_9);
+  page += F(LANG_INFO_10);
   page += WiFi.softAPIP().toString();
   page += F("</td></tr>");
-  page += F("<tr><td>Access Point MAC</td><td>");
+  page += F(LANG_INFO_11);
   page += WiFi.softAPmacAddress();
   page += F("</td></tr>");
 
-  page += F("<tr><td>SSID</td><td>");
+  page += F(LANG_INFO_12);
   page += WiFi_SSID();
   page += F("</td></tr>");
 
-  page += F("<tr><td>Station IP</td><td>");
+  page += F(LANG_INFO_14);
   page += WiFi.localIP().toString();
   page += F("</td></tr>");
 
-  page += F("<tr><td>Station MAC</td><td>");
+  page += F(LANG_INFO_15);
   page += WiFi.macAddress();
   page += F("</td></tr>");
   page += F("</tbody></table>");
@@ -1855,8 +1855,8 @@ void ESPAsync_WiFiManager::handleInfo(AsyncWebServerRequest *request)
   page += FPSTR(WM_FLDSET_END);
 #endif
 
-  page += F("<p/>More information about ESPAsync_WiFiManager at");
-  page += F("<p/><a href=\"https://github.com/khoih-prog/ESPAsync_WiFiManager\">https://github.com/khoih-prog/ESPAsync_WiFiManager</a>");
+  page += F(LANG_INFO_16);
+  page += F(LANG_INFO_17);
   page += FPSTR(WM_HTTP_END);
  
   AsyncWebServerResponse *response = request->beginResponse(200, "text/html", page);
@@ -1929,13 +1929,13 @@ void ESPAsync_WiFiManager::handleReset(AsyncWebServerRequest *request)
   LOGDEBUG(F("Reset"));
     
   String page = FPSTR(WM_HTTP_HEAD_START);
-  page.replace("{v}", "WiFi Information");
+  page.replace("{v}", LANG_RESET_1);
   page += FPSTR(WM_HTTP_SCRIPT);
   page += FPSTR(WM_HTTP_SCRIPT_NTP);
   page += FPSTR(WM_HTTP_STYLE);
   page += _customHeadElement;
   page += FPSTR(WM_HTTP_HEAD_END);
-  page += F("Resetting");
+  page += F(LANG_RESET_2);
   page += FPSTR(WM_HTTP_END);
     
   AsyncWebServerResponse *response = request->beginResponse(200, "text/html", page);
