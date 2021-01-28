@@ -393,7 +393,14 @@ void ESPAsync_WiFiManager::setupConfigPortal()
   //Microsoft captive portal. Maybe not needed. Might be handled by notFound handler.
   server->on("/fwlink",   std::bind(&ESPAsync_WiFiManager::handleRoot,        this, std::placeholders::_1)).setFilter(ON_AP_FILTER);  
   server->onNotFound (std::bind(&ESPAsync_WiFiManager::handleNotFound,        this, std::placeholders::_1));
-  
+
+  server->on("/style.css", HTTP_GET, [](AsyncWebServerRequest *request) {
+    request->send(FileFS, "style.css", "text/css");
+  });
+  server->on("/logo.svg", HTTP_GET, [](AsyncWebServerRequest *request) {
+    request->send(FileFS, "logo.svg", "image/svg+xml");
+  });
+
   server->begin(); // Web server start
   
   LOGWARN(F("HTTP server started"));
