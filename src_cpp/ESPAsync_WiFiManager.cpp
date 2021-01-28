@@ -394,12 +394,9 @@ void ESPAsync_WiFiManager::setupConfigPortal()
   server->on("/fwlink",   std::bind(&ESPAsync_WiFiManager::handleRoot,        this,std::placeholders::_1)).setFilter(ON_AP_FILTER);  
   server->onNotFound (std::bind(&ESPAsync_WiFiManager::handleNotFound,        this, std::placeholders::_1));
 
-  server->on("/style.css", HTTP_GET, [](AsyncWebServerRequest *request) {
-    request->send(FileFS, "/style.css", "text/css");
-  });
-  server->on("/logo.svg", HTTP_GET, [](AsyncWebServerRequest *request) {
-    request->send(FileFS, "/logo.svg", "image/svg+xml");
-  });
+#ifdef WM_SERVERINIT_HOOKS
+  WM_SERVERINIT_HOOKS
+#endif
 
   server->begin(); // Web server start
   
