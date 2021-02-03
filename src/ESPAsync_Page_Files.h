@@ -161,14 +161,6 @@
     "<label>" LANG_WM_HTTP_FORM_START_PASS "</label><input id=\"p\" name=\"p\" length=64 placeholder=\"password\">"\
     "<div></div>"\
   "</div>"\
-  "<div>"\
-    "<label>" LANG_WM_HTTP_FORM_START_SSID "1</label><input id=\"s1\" name=\"s1\" length=32 placeholder=\"SSID1\">"\
-    "<div></div>"\
-  "</div>"\
-  "<div>"\
-    "<label>" LANG_WM_HTTP_FORM_START_PASS "</label><input id=\"p1\" name=\"p1\" length=64 placeholder=\"password1\">"\
-    "<div></div>"\
-  "</div>"\
 "</fieldset>"
 
 

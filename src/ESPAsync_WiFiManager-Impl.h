@@ -1373,14 +1373,14 @@ void ESPAsync_WiFiManager::handleRoot(AsyncWebServerRequest *request)
 
   page += "</h2>";
   
-  page += FPSTR(WM_FLDSET_START);
+  //page += FPSTR(WM_FLDSET_START);
   
   page += FPSTR(WM_HTTP_PORTAL_OPTIONS);
   page += F("<div class=\"msg\">");
   reportStatus(page);
   page += F("</div>");
   
-  page += FPSTR(WM_FLDSET_END);
+  //page += FPSTR(WM_FLDSET_END);
     
   page += FPSTR(WM_HTTP_END);
  
